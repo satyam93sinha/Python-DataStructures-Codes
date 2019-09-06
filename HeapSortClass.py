@@ -38,15 +38,26 @@ class HeapSort:
             self.max_heap(arr, i, len(arr))
 
     def extract_heap(self, arr, end):
+        # swap the first/max element with the least/last element,
+        # this in a way extracts the max element/root to bottom sorting elements
+        # decrease the length of array with the loop, call max_heap to ensure
+        # heap is max_heap.
         arr[end], arr[0] = arr[0], arr[end]
         return self.max_heap(arr, 0, end)
 
     def heap_sort(self, arr):
+        """Sorting Heap
+        Firstly, we build max_heap so that the greater elements are at roots
+        and could be easily extracted with least time complexity.
+        Later, we iterate through the heap, nearly complete binary tree in
+        reverse order so that we can specify the exact length of array."""
         self.build_max_heap(arr)
         for i in range(self.len_arr-1, 0, -1):
             print("heap_sort, extract return", self.extract_heap(arr, i))
         return ("heap return", arr)
+    
     def heap(self, arr):
+        """A function performing extraction + heap_sort function's work."""
         self.build_max_heap(arr)
         for i in range(self.len_arr-1, 0, -1):
             arr[i], arr[0] = arr[0], arr[i]
