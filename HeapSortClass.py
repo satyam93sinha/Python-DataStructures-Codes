@@ -63,3 +63,37 @@ class HeapSort:
             arr[i], arr[0] = arr[0], arr[i]
             self.max_heap(arr, 0, i)
 
+    def min_heapify(self, arr, i, n):
+        left = 2*i+1
+        right = 2*i+2
+        min_ = i
+        
+        # check if left child is less than root
+        if left<n and arr[left]<arr[i]:
+            min_ = left
+
+        # check if right child is less than root and left child
+        if right<n and arr[right]<arr[min_]:
+            min_ = right
+
+        # check if root is the minimum of root, left and right children
+        if min_ != i:
+            arr[min_], arr[i] = arr[i], arr[min_]
+            self.min_heapify(arr, min_, n)
+
+    def build_min_heap(self, arr):
+        n = len(arr)
+        for i in range(n//2, -1, -1):
+            self.min_heapify(arr, i, n)
+
+    def extract_min_heap(self, arr, end):
+        arr[end], arr[0] = arr[0], arr[end]
+        self.min_heapify(arr, 0, end)
+        return arr
+
+    def min_heap_sort(self, arr):
+        self.build_min_heap(arr)
+        for i in range(len(arr)-1, 0, -1):
+            self.extract_min_heap(arr, i)
+        return arr
+
