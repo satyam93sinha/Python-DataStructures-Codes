@@ -62,6 +62,22 @@ class HeapSort:
         for i in range(self.len_arr-1, 0, -1):
             arr[i], arr[0] = arr[0], arr[i]
             self.max_heap(arr, 0, i)
+    """
+    The way of applying the logic for extraction differs below:
+    1. The max element of the heap in max_heap will always be at 0th index of the array here.
+    2. Thus, we pass 0 as node to extract_heap() function as one of the arguments.
+    3. With every iteration we have to ignore the last i elements of array while building max heap,
+       thus, len(arr)-i-1.
+    def extract_heap(arr, node, arr_len):
+        arr[node], arr[arr_len] = arr[arr_len], arr[node]
+        build_max_heap(arr, arr_len)
+        return arr
+    def heap_sort(arr):
+        build_max_heap(arr, len(arr))
+        for i in range(0, len(arr)):
+            extract_heap(arr, 0, len(arr)-i-1)
+        return "Heap Sorted Array: {}".format(arr)
+    """
 
     def min_heapify(self, arr, i, n):
         left = 2*i+1
