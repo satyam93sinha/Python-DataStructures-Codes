@@ -1,0 +1,104 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+class SinglyLinkedListNode:
+    def __init__(self, node_data):
+        self.data = node_data
+        self.next = None
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def insert_node(self, node_data):
+        node = SinglyLinkedListNode(node_data)
+
+        if not self.head:
+            self.head = node
+        else:
+            self.tail.next = node
+
+
+        self.tail = node
+
+def print_singly_linked_list(node, sep, fptr):
+    while node:
+        fptr.write(str(node.data))
+
+        node = node.next
+
+        if node:
+            fptr.write(sep)
+
+# Complete the findMergeNode function below.
+
+#
+# For your reference:
+#
+# SinglyLinkedListNode:
+#     int data
+#     SinglyLinkedListNode next
+#
+#
+def len_list(head1, head2):
+    current1, count1 = head1, 0
+    current2, count2 = head2, 0
+    while current1:
+        count1 += 1
+        print("current1:", current1.data, end=',')
+        current1 = current1.next
+    print()
+    while current2:
+        count2 += 1
+        print("current2:", current2.data, end=',')
+        current2 = current2.next
+    return (count1, count2)
+
+def findMergeNode(head1, head2):
+    # O(n) time complexity to calculate the length of linked list
+    # Also, traversing the linked list in above function for debugging
+    count1, count2 = len_list(head1, head2)
+    print("\n", count1, count2)
+    # Assuming linked list by current1 is smaller in length compared to that by current2
+    # Thus, calculating diff by count2-count1
+    current1, current2 = head1, head2
+    d = count2 - count1
+    # if count1>count2, making diff positive, swapping pointers value to ensure the
+    # largest linked list is always denoted by pointer current2.
+    if count1 > count2:
+        d = count1 - count2
+        current1, current2 = current2, current1
+    print("d:{}".format(d))
+    # O(j) time to reach the equidistant point from merge node
+    for i in range(d):
+        print("current2, before iter:{}".format(current2.data), end=',')
+        current2 = current2.next
+        print("\ncurrent2, after iter:{}".format(current2.data), end=',')
+    print()
+    # pointers are at equidistant node from the merge node, iterating until we get the
+    # same node in both the pointers.
+    while current1 and current2:
+        print("current1:{}, current2:{}".format(current1.data, current2.data))
+        if current1 == current2:
+            return current1.data
+        current1 = current1.next
+        current2 = current2.next
+    """
+    Takes Time=O(n+m), Space=O(n)
+    dic = {}
+    current = head1
+    while current:
+        dic[current] = 1
+        current = current.next
+    current = head2
+    while current:
+        if current in dic:
+            return current.data
+        current = current.next
+    """
