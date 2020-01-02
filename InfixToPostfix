@@ -1,0 +1,40 @@
+def is_operator(op):
+    if op=='^' or op=='*' or op=='/' or op=='+' or op=='-':
+        return True
+    else:
+        return False
+def preced(op, stack_op):
+    precedence = {'+':1, '-':1, '*':2, '/':2, '^':3}
+    try:
+        if precedence[op]<=precedence[stack_op]:
+            return True
+        
+    except KeyError:
+        return False
+def infix_to_postfix(exp):
+    stack, res = [], ''
+    for i in exp:
+        # Case1: IsOperand()
+        if i.isalpha():
+            res += i
+        # Case2: IsOpeningParenthesis()
+        elif i=='(':
+            stack.append(i)
+        # Case3: IsClosingParenthesis()
+        elif i==')':
+            while len(stack)>0 and stack[-1]!='(':
+                res += stack.pop()
+            if len(stack)>0 and stack[-1]=='(':
+                stack.pop()
+        # Case4: IsOperator()
+        elif is_operator(i):
+                while len(stack)>0 and preced(i, stack[-1]):
+                    res += stack.pop()
+                stack.append(i)
+    while len(stack)>0:
+        res += stack.pop()
+    print(res)
+
+for i in range(int(input())):
+    infix = input()
+    infix_to_postfix(infix)
