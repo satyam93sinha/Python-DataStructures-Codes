@@ -1,0 +1,8 @@
+import math
+def is_BST(root, minVal, maxVal):
+    if root == None:
+        return True
+    if minVal<root.data<maxVal and is_BST(root.left, minVal, root.data) and is_BST(root.right, root.data, maxVal):
+        return True
+def check_binary_search_tree_(root):
+    return is_BST(root, -math.inf, math.inf)
