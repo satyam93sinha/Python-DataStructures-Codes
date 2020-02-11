@@ -1,0 +1,37 @@
+class AdjNode:
+    def __init__(self, data):
+        self.vertex = data
+        self.next = None
+    
+class Graph:
+    def __init__(self, v):
+        self.v = v
+        self.graph = [None]*self.v
+    
+    def add_edge(self, src, dest):
+        node = AdjNode(dest)
+        if self.graph[src]:
+            current = self.graph[src]
+            while current.next:
+                current = current.next
+            current.next = node
+        elif self.graph[src]==None:
+            self.graph[src] = node
+            
+        node = AdjNode(src)
+        if self.graph[dest]:
+            current = self.graph[dest]
+            while current.next:
+                current = current.next
+            current.next = node
+        elif self.graph[dest]==None:
+            self.graph[dest] = node
+    
+    def print_edges(self):
+        for i in range(self.v):
+            current = self.graph[i]
+            print("{}".format(i), end='')
+            while current:
+                print("-> {}".format(current.vertex), end='')
+                current = current.next
+            print()
