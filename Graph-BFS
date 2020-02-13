@@ -1,0 +1,43 @@
+def bfs(g,N):
+    '''
+    :param g: given adjacency list of graph
+    :param N: number of nodes in N.
+    '''
+    # code here
+    # level determines the cost/steps to reach specific node from start node
+    # level where a vertex is located from the initial considered vertex
+    level = {0:0}
+    # parent stores the path to vertices, to determine the edges
+    # we can also caculate the shortest path taken by accessing the parent
+    # of specific vertex(value of that vertex(key)), again checking
+    # value/parent of the previous parent vertex.
+    # assume: v <- c
+    #         c <- x
+    #         x <- s
+    #         s <- None
+    # until we get None/specific assumed parent vertex
+    # refer MIT lecture video BFS 6.006
+    parent = {0:None}
+    # first level 0 is already set, the intial/start vertex 0 
+    # so now moving towards i = 1 and exploring other levels accessible
+    # to that initial/start vertex
+    i = 1
+    # a list storing the vertices we have to currently explore
+    frontier = [0]
+    print(frontier[0], end=' ')
+    while frontier:
+        # next_ stores the edge nodes that are to be explored for each vertex
+        next_ = []
+        # Below for loop iterates over vertices present in the Adjacency List
+        for u in frontier:
+            # Below for loop iterates over the edges/neighbouring vertices
+            for v in g[u]:
+                # avoids duplicacy of vertices, thus, avoiding duplicate
+                # edges and cycling of graph
+                if v not in level:
+                    level[v] = i
+                    parent[v] = u
+                    next_.append(v)
+                    print(v, end=' ')
+        frontier = next_
+        i += 1
