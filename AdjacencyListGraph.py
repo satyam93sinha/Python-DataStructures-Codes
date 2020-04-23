@@ -1,4 +1,44 @@
-# Adjacency List Implementation:
+ADJACENCY LIST IMPLEMENTATION
+---------------------------------------------------------------------------------------------------------
+DATA STRUCTURE: DICTIONARY
+--------------------------  
+    class AdjacencyList:
+    def __init__(self, N, M):
+        self.nodes_num = N
+        self.edges_num = M
+        self.adjList = dict()
+    
+    def edges(self, from_, to_):
+        if from_ not in self.adjList:
+            self.adjList[from_] = [to_]
+            # undirected edge is specified in problem
+        else:
+            self.adjList[from_].append(to_)
+        if to_ not in self.adjList:
+            self.adjList[to_] = [from_]
+        else:
+            self.adjList[to_].append(from_)
+    def find_edge(self, from_, to_):
+        for i in (self.adjList[from_]):
+            if i==to_:
+                return "YES"
+        return 'NO'
+n, m = map(int, input().split())
+adjacency_list = AdjacencyList(n, m)
+for i in range(m):
+    A, B = input().split()
+    adjacency_list.edges(A, B)
+q = int(input())
+for i in range(q):
+    c, d = input().split()
+    print(adjacency_list.find_edge(c, d))
+    #print(adjacency_list.adjList)
+
+
+
+
+DATA STRUCTURE: LINKED LIST
+-------------------------------
 class AdjNode:
     def __init__(self, data):
         self.vertex = data
