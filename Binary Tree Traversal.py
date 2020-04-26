@@ -1,3 +1,5 @@
+Check Youtube for iterative traversal's explanation: Channel: Code Campaign
+
 class Node:
     def __init__(self, node):
         self.value = node
@@ -28,6 +30,23 @@ class BinaryTree:
             self.preorder_traversal_recur(root.right)
         else:
             return
+     
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        stack = list()
+        top = -1
+        preorder = list()
+        node = root
+        while node or top!=-1:
+            if node:
+                stack.append(node)
+                top += 1
+                preorder.append(node.val)
+                node = node.left
+            else:
+                node = stack.pop()
+                top -= 1
+                node = node.right
+        return preorder
 
     def postorder_traversal_recur(self, root):
         if root:
@@ -36,6 +55,21 @@ class BinaryTree:
             print(root.value, end = ",")
         else:
             return
+    
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        stack = list()
+        postorder = list()
+        node = root
+        while node or len(stack):
+            if node:
+                stack.append(node)
+                postorder.append(node.val)
+                node = node.right
+            else:
+                node = stack.pop()
+                node = node.left
+        postorder.reverse()
+        return postorder
 
     def inorder_traversal_recur(self, root):
         if root:
