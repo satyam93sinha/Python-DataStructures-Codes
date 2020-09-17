@@ -1,0 +1,46 @@
+Question: https://practice.geeksforgeeks.org/problems/fractional-knapsack/0
+For Explanation: Abdul Bari, GeeksForGeeks Fractional Knapsack
+
+class Item:
+    def __init__(self, weight, value, index):
+        self.weight = weight
+        self.value = value
+        self.index = index
+        self.cost = value/weight
+    
+    def __lt__(self, other):
+        return self.cost<other.cost
+
+class FractionalKnapsack:
+    
+    def get_max_value(self, 
+                        weight, 
+                        value, 
+                        capacity):
+        item_list = list()
+        for index_ in range(len(weight)):
+            item_list.append(Item(weight[index_], 
+                                value[index_], index_))
+        item_list.sort(reverse=True)
+        max_value = 0
+        for item in item_list:
+            if item.weight<=capacity:
+                capacity -= item.weight
+                max_value += item.value
+            else:
+                # capacity -= capacity/item.weight
+                max_value += item.value*(capacity/item.weight)
+                break
+        return round(max_value, 2)
+
+for _ in range(int(input())):
+    n, capacity = map(int, input().split())
+    items_weight_val = list(map(int, input().split()))
+    weight, value = list(), list()
+    i = 0
+    while i<(n*2):
+        value.append(items_weight_val[i])
+        weight.append(items_weight_val[i+1])
+        i += 2
+    fractional_knapsack = FractionalKnapsack()
+    print(fractional_knapsack.get_max_value(weight, value, capacity))
