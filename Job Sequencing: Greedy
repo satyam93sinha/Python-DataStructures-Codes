@@ -1,0 +1,83 @@
+Question: https://practice.geeksforgeeks.org/problems/job-sequencing-problem/0
+
+class Job:
+    def __init__(self, id_, deadline, profit):
+        # making a job object that contains job details
+        self.id_ = id_
+        self.deadline = deadline
+        self.profit = profit
+    
+    def __lt__(self, other):
+        # whenever lesser than(in sorting) is used,
+        # it compares self.profit and other.profit to sort
+        # based on profit
+        return self.profit<other.profit
+    
+    def __gt__(self, other):
+        # to take into account, the highest number of
+        # deadline time to make an array of that length
+        # in order to track the deadlines fulfilled, while
+        # using max(list) or comparing for greater
+        return self.deadline>other.deadline
+
+class JobSequencing:
+    def max_profit(self, input_arr):
+        # a list to store job objects
+        job_list = list()
+        # setting index for input_arr as 0, to iterate
+        # we can also say, it's an iter variable
+        index = 0
+        while index<len(input_arr):
+            # making job objects
+            id_, deadline, profit = (input_arr[index],
+                                    input_arr[index+1],
+                                    input_arr[index+2])
+            job_list.append(Job(id_, deadline, profit))
+            index += 3
+        # sorting job_list, a list of job objects
+        # __lt__ method of Job class is for this purpose
+        job_list.sort(reverse=True)
+        # keeping account of total profit
+        total_profit = 0
+        # declaring a profit array to keep track of deadlines
+        # len is the highest/max deadline present in job_list
+        # __gt__ method of Job class is for max(list) purpose
+        profit_array = [0]*max(job_list).deadline
+        # setting a flag, profit, to ensure it's really a profit
+        profit = True
+        # to keep account of total jobs involved in making the profit
+        no_of_jobs = 0
+        # print("profit_array:", profit_array)
+        for elem in job_list:
+            # setting current as elem.deadline-1 to check
+            # if it's 0, we will take it as profit else ignore it
+            # based on flag profit
+            current = elem.deadline - 1
+            # print("elem.deadline:", elem.deadline)
+            while profit_array[current]!=0 and current>-1:
+                # print("current:", current)
+                # to consider same deadlines accounting to profit
+                # for multiple times, as- 2 200, 2 100
+                current -= 1
+                profit = False
+            if current>-1:
+                # possibility that there's no space to insert this new profit
+                # if so, current==-1 and profit set to False
+                # else, this condition evaluates to true and sets
+                # profit=True
+                profit = True
+            if profit:
+                # print("Current:", current)
+                # if it's a profit, adding/considering it.
+                profit_array[current] = elem.profit
+                total_profit += elem.profit
+                no_of_jobs += 1
+                # print("profit array:", profit_array)
+        print(no_of_jobs, total_profit)
+
+for _ in range(int(input())):
+    n = int(input())
+    input_arr = list(map(int, input().split()))
+    job_sequencing = JobSequencing()
+    job_sequencing.max_profit(input_arr)
+        
