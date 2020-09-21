@@ -1,5 +1,7 @@
 Question: https://practice.geeksforgeeks.org/problems/job-sequencing-problem/0
 
+#code
+
 class Job:
     def __init__(self, id_, deadline, profit):
         # making a job object that contains job details
@@ -21,6 +23,8 @@ class Job:
         return self.deadline>other.deadline
 
 class JobSequencing:
+    """Time: O(nlogn), Space: O(max(n, len(profit_array)))
+    """
     def max_profit(self, input_arr):
         # a list to store job objects
         job_list = list()
@@ -36,6 +40,7 @@ class JobSequencing:
             index += 3
         # sorting job_list, a list of job objects
         # __lt__ method of Job class is for this purpose
+        # Time: O(nlogn) for sorting
         job_list.sort(reverse=True)
         # keeping account of total profit
         total_profit = 0
@@ -49,6 +54,7 @@ class JobSequencing:
         no_of_jobs = 0
         # print("profit_array:", profit_array)
         for elem in job_list:
+            # Time: O(n) worst case
             # setting current as elem.deadline-1 to check
             # if it's 0, we will take it as profit else ignore it
             # based on flag profit
